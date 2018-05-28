@@ -3,17 +3,27 @@
     package="plugin.dryseed.plugin">
 
     <application
+        android:name="plugin.dryseed.chapter5.classloader_hook.UPFApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity android:name="plugin.dryseed.EntryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".MainActivity">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
 
         <activity
@@ -25,6 +35,16 @@
                 <category android:name="com.dryseed.dryseedapp.TEST" />
             </intent-filter>
         </activity>
+
+        <activity android:name="plugin.dryseed.chapter1.dynamic_proxy_hook.hook.MainActivity" />
+        <activity android:name="plugin.dryseed.chapter2.binder_hook.MainActivity" />
+        <activity android:name="plugin.dryseed.chapter3.ams_pms_hook.MainActivity" />
+
+        <activity android:name="plugin.dryseed.chapter4.intercept_activity.MainActivity" />
+        <activity android:name="plugin.dryseed.chapter4.intercept_activity.StubActivity" />
+
+        <activity android:name="plugin.dryseed.chapter5.classloader_hook.MainActivity" />
+        <activity android:name="plugin.dryseed.chapter5.classloader_hook.StubActivity" />
     </application>
 
 </manifest>

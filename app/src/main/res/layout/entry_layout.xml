@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:onClick="onBtn1Click"
+        android:text="Chapter1 ActivityHook" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:onClick="onBtn2Click"
+        android:text="Chapter2 BinderHook" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:onClick="onBtn3Click"
+        android:text="Chapter3 AmsPmsHook" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:onClick="onBtn4Click"
+        android:text="Chapter4 InterceptActivity" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:onClick="onBtn5Click"
+        android:text="Chapter5 ClassLoaderHook" />
+</LinearLayout>
