@@ -1,1 +1,18 @@
 include ':app'
+
+include ':MultidexLoaderHostApk'
+project(':MultidexLoaderHostApk').projectDir = new File(rootDir, 'AssetsMultidexLoader/MultidexLoaderHostApk')
+
+include ':MultidexLoaderBundleApk'
+project(':MultidexLoaderBundleApk').projectDir = new File(rootDir, 'AssetsMultidexLoader/MultidexLoaderBundleApk')
+
+include ':DexClassLoaderHostApk'
+project(':DexClassLoaderHostApk').projectDir = new File(rootDir, 'DexClassLoader/DexClassLoaderHostApk')
+
+include ':DexClassLoaderBundleApk'
+project(':DexClassLoaderBundleApk').projectDir = new File(rootDir, 'DexClassLoader/DexClassLoaderBundleApk')
+
+
+
+
+
