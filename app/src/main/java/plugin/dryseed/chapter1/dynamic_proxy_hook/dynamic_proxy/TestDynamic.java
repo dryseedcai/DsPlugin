@@ -16,10 +16,10 @@ public class TestDynamic {
 
         // 招代理
         women = (Shopping) Proxy.newProxyInstance(
-                Shopping.class.getClassLoader(),
-                women.getClass().getInterfaces(),
-                new ShoppingHandler(women))
-        ;
+                Shopping.class.getClassLoader(),    // ClassLoader loader
+                women.getClass().getInterfaces(),   // Class<?>[] interfaces
+                new ShoppingHandler(women)          // InvocationHandler h
+        );
 
         System.out.println(Arrays.toString(women.doShopping(100)));
     }

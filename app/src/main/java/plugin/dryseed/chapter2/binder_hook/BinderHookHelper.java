@@ -26,11 +26,16 @@ public class BinderHookHelper {
         // 一般来说这是一个Binder代理对象
         IBinder rawBinder = (IBinder) getService.invoke(null, CLIPBOARD_SERVICE);
 
-        // Hook 掉这个Binder代理对象的 queryLocalInterface 方法
-        // 然后在 queryLocalInterface 返回一个IInterface对象, hook掉我们感兴趣的方法即可.
-        IBinder hookedBinder = (IBinder) Proxy.newProxyInstance(serviceManager.getClassLoader(),
-                new Class<?>[] { IBinder.class },
-                new BinderProxyHookHandler(rawBinder));
+        /**
+         * Hook 掉这个Binder代理对象的 queryLocalInterface 方法
+         * 然后在 queryLocalInterface 返回一个IInterface对象, hook掉我们感兴趣的方法即可.
+         * code : android.os.IInterface iin = ((android.os.IBinder)obj).queryLocalInterface(DESCRIPTOR); // Hook点
+         */
+        IBinder hookedBinder = (IBinder) Proxy.newProxyInstance(
+                serviceManager.getClassLoader(),
+                new Class<?>[]{IBinder.class},
+                new BinderProxyHookHandler(rawBinder)
+        );
 
         // 把这个hook过的Binder代理对象放进ServiceManager的cache里面
         // 以后查询的时候 会优先查询缓存里面的Binder, 这样就会使用被我们修改过的Binder了

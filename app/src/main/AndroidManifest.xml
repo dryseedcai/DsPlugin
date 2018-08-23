@@ -45,6 +45,7 @@
 
         <activity android:name="plugin.dryseed.chapter5.classloader_hook.MainActivity" />
         <activity android:name="plugin.dryseed.chapter5.classloader_hook.StubActivity" />
+        <activity android:name="plugin.dryseed.chapter6.broadcast_receiver_management.MainActivity" />
     </application>
 
 </manifest>
