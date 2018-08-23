@@ -12,6 +12,12 @@ project(':DexClassLoaderHostApk').projectDir = new File(rootDir, 'DexClassLoader
 include ':DexClassLoaderBundleApk'
 project(':DexClassLoaderBundleApk').projectDir = new File(rootDir, 'DexClassLoader/DexClassLoaderBundleApk')
 
+include ':ResourceLoaderHostApk'
+project(':ResourceLoaderHostApk').projectDir = new File(rootDir, 'ResourceLoader/ResourceLoaderHostApk')
+
+include ':ResourceLoaderBundleApk'
+project(':ResourceLoaderBundleApk').projectDir = new File(rootDir, 'ResourceLoader/ResourceLoaderBundleApk')
+
 include ':LayoutInflaterHostApk'
 project(':LayoutInflaterHostApk').projectDir = new File(rootDir, 'LayoutInflaterClassLoader/LayoutInflaterHostApk')
 

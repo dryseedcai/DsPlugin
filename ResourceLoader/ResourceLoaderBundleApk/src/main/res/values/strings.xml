@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ResourceLoaderBundleApk</string>
+    <string name="test_str">I am in bundle str</string>
+    <string name="action_settings">Settings</string>
+</resources>
