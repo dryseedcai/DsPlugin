@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':DsVirtualApk'
 
 include ':MultidexLoaderHostApk'
 project(':MultidexLoaderHostApk').projectDir = new File(rootDir, 'AssetsMultidexLoader/MultidexLoaderHostApk')
