@@ -1,4 +1,4 @@
-package com.dryseed.dsvirtualapk.utils;
+package com.dryseed.dsvirtualapk.core.utils;
 
 
 import android.util.Log;

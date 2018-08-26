@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.dryseed.dsvirtualapk.utils;
+package com.dryseed.dsvirtualapk.core.utils;
 
 import android.app.Instrumentation;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.dryseed.dsvirtualapk;
+package com.dryseed.dsvirtualapk.core;
 
 import android.app.Activity;
 

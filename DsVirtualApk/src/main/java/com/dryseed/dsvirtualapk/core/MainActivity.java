@@ -1,5 +1,6 @@
-package com.dryseed.dsvirtualapk;
+package com.dryseed.dsvirtualapk.core;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
@@ -9,28 +10,56 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.dryseed.dsvirtualapk.internal.LoadedPlugin;
-import com.dryseed.dsvirtualapk.utils.DexUtil;
-import com.dryseed.dsvirtualapk.utils.LogUtil;
+import com.dryseed.dsvirtualapk.core.utils.LogUtil;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class MainActivity extends AppCompatActivity {
+
+    private PluginManager pluginManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initViews();
+
+        Toast.makeText(this, "" + this.getPackageName(), Toast.LENGTH_SHORT).show();
         loadPlugin(this);
 
     }
 
+    private void initViews() {
+        findViewById(R.id.btn1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testInstrumentation(v);
+            }
+        });
+        findViewById(R.id.btn2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testClassLoader(v);
+            }
+        });
+        findViewById(R.id.btn3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testActivity(v);
+            }
+        });
+    }
+
+    /**
+     * 从sdcard或者assets中获取apk文件，调用pluginManager.loadPlugin(file);
+     *
+     * @param context
+     */
     private void loadPlugin(Context context) {
-        PluginManager pluginManager = PluginManager.getInstance(context);
+        pluginManager = PluginManager.getInstance(context);
 
         if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             Toast.makeText(this, "sdcard was NOT MOUNTED!", Toast.LENGTH_SHORT).show();
@@ -69,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Test Hook Instrumentation
+     * 1. VAInstrumentation动态代理了Instrumentation
      *
      * @param view
      */
@@ -79,13 +109,14 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Test Hook ClassLoader
+     * 1. 动态加载apk中的Utils类
+     * 2. LoadedPlugin中创建了新的ClassLoader
      *
      * @param view
      */
     public void testClassLoader(View view) {
         try {
-            Class<?> clazz = LoadedPlugin.loadClass(getApplicationContext(),
-                    "com.dryseed.dexclassloaderbundleapk.Utils");
+            Class<?> clazz = pluginManager.getLoadedPlugin("com.dryseed.dexclassloaderbundleapk").getClassLoader().loadClass("com.dryseed.dexclassloaderbundleapk.Utils");
             Constructor<?> constructor = clazz.getConstructor();
             Object bundleUtils = constructor.newInstance();
 
@@ -98,5 +129,17 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Test Jump Plugin Activity
+     *
+     * @param view
+     */
+    public void testActivity(View view) {
+        Intent intent = new Intent();
+        ComponentName componentName = new ComponentName("com.dryseed.dexclassloaderbundleapk", "com.dryseed.dexclassloaderbundleapk.MainActivity");
+        intent.setComponent(componentName);
+        startActivity(intent);
     }
 }

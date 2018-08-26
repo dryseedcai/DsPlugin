@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dryseed.dsvirtualapk">
+    package="com.dryseed.dsvirtualapk.core">
 
     <application
+        android:name=".VAApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,6 +18,95 @@
             </intent-filter>
         </activity>
         <activity android:name=".TestActivity" />
+
+
+        <!-- Stub Activities -->
+        <activity
+            android:name=".A$1"
+            android:launchMode="standard" />
+        <activity
+            android:name=".A$2"
+            android:launchMode="standard"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <!-- Stub Activities -->
+        <activity
+            android:name=".B$1"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".B$2"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".B$3"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".B$4"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".B$5"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".B$6"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".B$7"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".B$8"
+            android:launchMode="singleTop" />
+
+        <!-- Stub Activities -->
+        <activity
+            android:name=".C$1"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".C$2"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".C$3"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".C$4"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".C$5"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".C$6"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".C$7"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".C$8"
+            android:launchMode="singleTask" />
+
+        <!-- Stub Activities -->
+        <activity
+            android:name=".D$1"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".D$2"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".D$3"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".D$4"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".D$5"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".D$6"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".D$7"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".D$8"
+            android:launchMode="singleInstance" />
+
     </application>
 
 </manifest>

@@ -1,14 +1,17 @@
-package com.dryseed.dsvirtualapk.internal;
+package com.dryseed.dsvirtualapk.core.internal;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 
-import com.dryseed.dsvirtualapk.PluginManager;
-import com.dryseed.dsvirtualapk.utils.Constants;
-import com.dryseed.dsvirtualapk.utils.DexUtil;
+import com.dryseed.dsvirtualapk.core.PluginManager;
+import com.dryseed.dsvirtualapk.core.utils.Constants;
+import com.dryseed.dsvirtualapk.core.utils.DexUtil;
 
 import java.io.File;
 
 import dalvik.system.DexClassLoader;
+
 
 /**
  * @author caiminming
@@ -21,6 +24,15 @@ public class LoadedPlugin {
         return new LoadedPlugin(pluginManager, host, apk);
     }
 
+    /**
+     * LoadedPlugin初始化
+     * 1. 创建自定义ClassLoader
+     *
+     * @param pluginManager
+     * @param context
+     * @param apk
+     * @throws Exception
+     */
     LoadedPlugin(PluginManager pluginManager, Context context, File apk) throws Exception {
         // mNativeLibDir : /data/data/package_name/valibs
         this.mNativeLibDir = context.getDir(Constants.NATIVE_DIR, Context.MODE_PRIVATE);
@@ -47,5 +59,27 @@ public class LoadedPlugin {
 
     public ClassLoader getClassLoader() {
         return this.mClassLoader;
+    }
+
+    /**
+     * plugin的package名
+     *
+     * @return
+     */
+    public String getPackageName() {
+        //return this.mPackage.packageName;
+        return "com.dryseed.dexclassloaderbundleapk";
+    }
+
+    /**
+     * plugin的ActivityInfo
+     *
+     * @param componentName
+     * @return
+     */
+    public ActivityInfo getActivityInfo(ComponentName componentName) {
+        ActivityInfo activityInfo = new ActivityInfo();
+        activityInfo.launchMode = ActivityInfo.LAUNCH_MULTIPLE;
+        return activityInfo;
     }
 }
