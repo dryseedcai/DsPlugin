@@ -34,4 +34,8 @@ public class EntryActivity extends Activity {
     public void onBtn5Click(View view) {
         startActivity(new Intent(this, plugin.dryseed.chapter5.classloader_hook.MainActivity.class));
     }
+
+    public void onBtn6Click(View view) {
+        startActivity(new Intent(this, plugin.dryseed.chapter6.broadcast_receiver_management.MainActivity.class));
+    }
 }

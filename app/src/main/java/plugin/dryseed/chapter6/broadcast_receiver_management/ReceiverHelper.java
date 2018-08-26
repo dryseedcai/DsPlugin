@@ -20,7 +20,7 @@ import android.util.Log;
  */
 public final class ReceiverHelper {
 
-    private static final String TAG = "ReceiverHelper";
+    private static final String TAG = "MMM";
 
     public static Map<ActivityInfo, List<? extends IntentFilter>> sCache =
             new HashMap<ActivityInfo, List<? extends IntentFilter>>();

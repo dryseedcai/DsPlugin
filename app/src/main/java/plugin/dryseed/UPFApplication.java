@@ -1,4 +1,4 @@
-package plugin.dryseed.chapter6.broadcast_receiver_management;
+package plugin.dryseed;
 
 import android.app.Application;
 import android.content.Context;

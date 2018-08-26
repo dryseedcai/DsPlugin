@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import dalvik.system.DexClassLoader;
+import plugin.dryseed.UPFApplication;
 
 /**
  * @author weishu

@@ -33,4 +33,10 @@
         android:layout_height="60dp"
         android:onClick="onBtn5Click"
         android:text="Chapter5 ClassLoaderHook" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:onClick="onBtn6Click"
+        android:text="Chapter6 BroadcastReceiverManagement" />
 </LinearLayout>

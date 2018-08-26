@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import plugin.dryseed.chapter5.classloader_hook.StubActivity;
-import plugin.dryseed.chapter5.classloader_hook.UPFApplication;
+import plugin.dryseed.UPFApplication;
 
 /**
  * @author weishu

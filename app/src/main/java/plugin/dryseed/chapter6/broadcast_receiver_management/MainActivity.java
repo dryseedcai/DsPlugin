@@ -19,8 +19,8 @@ import android.widget.Toast;
  */
 public class MainActivity extends Activity {
 
-    // 发送广播到插件之后, 插件如果受到, 那么会回传一个ACTION 为这个值的广播;
-    static final String ACTION = "com.weishu.upf.demo.app2.PLUGIN_ACTION";
+    private static final String ACTION = "com.dryseed.bundleapk.PLUGIN_ACTION";
+    private static final String APK_NAME = "BundleApk-debug.apk";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +33,12 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "插件插件!收到请回答!!", Toast.LENGTH_SHORT).show();
-                sendBroadcast(new Intent("com.weishu.upf.demo.app2.Receiver1"));
+                sendBroadcast(new Intent("com.dryseed.bundleapk.MyReceiver"));
             }
         });
 
-        Utils.extractAssets(this, "test.jar");
-        File testPlugin = getFileStreamPath("test.jar");
+        Utils.extractAssets(this, APK_NAME);
+        File testPlugin = getFileStreamPath(APK_NAME);
         try {
             ReceiverHelper.preLoadReceiver(this, testPlugin);
             Log.i(getClass().getSimpleName(), "hook success");
@@ -53,6 +53,7 @@ public class MainActivity extends Activity {
     BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            Log.d("MMM", "onReceive2");
             Toast.makeText(context, "插件插件,我是主程序,握手完成!", Toast.LENGTH_SHORT).show();
         }
     };

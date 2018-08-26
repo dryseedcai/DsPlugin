@@ -9,6 +9,8 @@ import java.io.InputStream;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import plugin.dryseed.UPFApplication;
+
 /**
  * @author weishu
  * @date 16/3/29

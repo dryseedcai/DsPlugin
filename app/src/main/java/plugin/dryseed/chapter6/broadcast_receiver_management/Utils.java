@@ -1,13 +1,15 @@
 package plugin.dryseed.chapter6.broadcast_receiver_management;
 
+import android.content.Context;
+import android.content.res.AssetManager;
+
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import android.content.Context;
-import android.content.res.AssetManager;
+import plugin.dryseed.UPFApplication;
 
 /**
  * @author weishu
@@ -72,7 +74,12 @@ public class Utils {
 
     private static File sBaseDir;
 
-    // 需要加载得插件得基本目录 /data/data/<package>/files/plugin/
+    /**
+     * 需要加载得插件得基本目录 /data/data/<package>/files/plugin/
+     *
+     * @param packageName
+     * @return
+     */
     private static File getPluginBaseDir(String packageName) {
         if (sBaseDir == null) {
             sBaseDir = UPFApplication.getContext().getFileStreamPath("plugin");
