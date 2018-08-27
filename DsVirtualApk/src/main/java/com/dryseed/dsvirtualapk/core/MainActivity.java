@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         Resources resources = pluginManager.getLoadedPlugin(Constants.TEST_PACKAGE_NAME).getResources();
         //String str = resources.getString(resources.getIdentifier("bundle_name", "string", Constants.TEST_PACKAGE_NAME));
 
-        String s = resources.getString(0x7f060020);
-        Toast.makeText(this, getResources().getString(0x7f060020) + "||" + s, Toast.LENGTH_SHORT).show();
+        String s = resources.getString(0x7f060024);
+        Toast.makeText(this, getResources().getString(0x7f060024) + "||" + s, Toast.LENGTH_SHORT).show();
     }
 }

@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">DexClassLoaderBundleApk</string>
-    <string name="bundle_name">DexClassLoaderBundleApk</string>
+    <string name="bundle_name_1">DexClassLoaderBundleApk1</string>
+    <string name="bundle_name_2">DexClassLoaderBundleApk2</string>
+    <string name="bundle_name_3">DexClassLoaderBundleApk3</string>
+    <string name="bundle_name_4">DexClassLoaderBundleApk4</string>
+    <string name="bundle_name_5">DexClassLoaderBundleApk5</string>
 </resources>
