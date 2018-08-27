@@ -21,6 +21,7 @@ import android.app.Instrumentation;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 
 import com.dryseed.dsvirtualapk.core.PluginManager;
 import com.dryseed.dsvirtualapk.core.utils.LogUtil;
@@ -72,7 +74,7 @@ public class VAInstrumentation extends Instrumentation implements Handler.Callba
 
         // null component is an implicitly intent
         if (intent.getComponent() != null) {
-            Log.i(TAG, String.format("execStartActivity[%s : %s]", intent.getComponent().getPackageName(),
+            LogUtil.i(TAG, String.format("execStartActivity[%s : %s]", intent.getComponent().getPackageName(),
                     intent.getComponent().getClassName()));
             // resolve intent with Stub Activity if needed
             this.mPluginManager.getComponentsHandler().markIntentIfNeeded(intent);
@@ -131,7 +133,7 @@ public class VAInstrumentation extends Instrumentation implements Handler.Callba
             // 1. 从intent中取出我们的目标Activity
             String targetClassName = component.getClassName();
 
-            Log.i(TAG, String.format("newActivity[%s : %s/%s]", className, component.getPackageName(), targetClassName));
+            LogUtil.d(TAG, String.format("newActivity[%s : %s/%s]", className, component.getPackageName(), targetClassName));
 
             if (plugin != null) {
                 // 2. 然后通过plugin的ClassLoader去加载
@@ -139,8 +141,14 @@ public class VAInstrumentation extends Instrumentation implements Handler.Callba
                 activity.setIntent(intent);
 
                 try {
+                    /**
+                     * 系统在创建完Activity对象后，紧接着创建Activity所附着的Context，在 createBaseContextForActivity 方法中创建出来的 ContextImpl appContext
+                     * 使用的是宿主的Resources，如果不进行处理紧接着Activity会走入onCreate的生命周期中，此时插件加载资源的时候还是使用的宿主的资源，
+                     * 而不是我们特意为插件所创建出来的Resources对象，则会发生找不到资源的问题。
+                     * 解决方法：提前设置 ContextThemeWrapper 中的mResources对象，系统所创建的Resources对象其实就用不到了。
+                     */
                     // for 4.1+
-                    // ReflectUtil.setField(ContextThemeWrapper.class, activity, "mResources", plugin.getResources());
+                    ReflectUtil.setField(ContextThemeWrapper.class, activity, "mResources", plugin.getResources());
                 } catch (Exception ignored) {
                     // ignored.
                 }
@@ -167,10 +175,11 @@ public class VAInstrumentation extends Instrumentation implements Handler.Callba
             Context base = activity.getBaseContext();
             try {
                 LoadedPlugin plugin = this.mPluginManager.getLoadedPlugin(intent);
-//                ReflectUtil.setField(base.getClass(), base, "mResources", plugin.getResources());
-//                ReflectUtil.setField(ContextWrapper.class, activity, "mBase", plugin.getPluginContext());
-//                ReflectUtil.setField(Activity.class, activity, "mApplication", plugin.getApplication());
-//                ReflectUtil.setFieldNoException(ContextThemeWrapper.class, activity, "mBase", plugin.getPluginContext());
+                ReflectUtil.setField(base.getClass(), base, "mResources", plugin.getResources());
+                ReflectUtil.setField(ContextWrapper.class, activity, "mBase", plugin.getPluginContext());
+                //TODO:
+                //ReflectUtil.setField(Activity.class, activity, "mApplication", plugin.getApplication());
+                ReflectUtil.setFieldNoException(ContextThemeWrapper.class, activity, "mBase", plugin.getPluginContext());
 
                 // set screenOrientation
                 ActivityInfo activityInfo = plugin.getActivityInfo(PluginUtil.getComponent(intent));

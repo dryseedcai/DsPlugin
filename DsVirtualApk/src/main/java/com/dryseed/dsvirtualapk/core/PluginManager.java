@@ -1,10 +1,12 @@
 package com.dryseed.dsvirtualapk.core;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.app.Instrumentation;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import com.dryseed.dsvirtualapk.core.internal.ComponentsHandler;
 import com.dryseed.dsvirtualapk.core.internal.LoadedPlugin;
@@ -16,6 +18,8 @@ import com.dryseed.dsvirtualapk.core.utils.RunUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -70,7 +74,7 @@ public class PluginManager {
     private void prepare() {
         ContextUtil.sHostContext = getHostContext();
         this.hookInstrumentationAndHandler();
-        //this.hookSystemServices();
+        this.hookSystemServices();
     }
 
     /**
@@ -112,6 +116,31 @@ public class PluginManager {
     }
 
     /**
+     * hookSystemServices, but need to compatible with Android O in future.
+     */
+    private void hookSystemServices() {
+//        try {
+//            Singleton<IActivityManager> defaultSingleton;
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                defaultSingleton = (Singleton<IActivityManager>) ReflectUtil.getField(ActivityManager.class, null, "IActivityManagerSingleton");
+//            } else {
+//                defaultSingleton = (Singleton<IActivityManager>) ReflectUtil.getField(ActivityManagerNative.class, null, "gDefault");
+//            }
+//            IActivityManager activityManagerProxy = ActivityManagerProxy.newInstance(this, defaultSingleton.get());
+//
+//            // Hook IActivityManager from ActivityManagerNative
+//            ReflectUtil.setField(defaultSingleton.getClass().getSuperclass(), defaultSingleton, "mInstance", activityManagerProxy);
+//
+//            if (defaultSingleton.get() == activityManagerProxy) {
+//                this.mActivityManager = activityManagerProxy;
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    /**
      * load a plugin into memory, then invoke it's Application.
      *
      * @param apk the file of plugin, should end with .apk
@@ -147,6 +176,12 @@ public class PluginManager {
 
     public LoadedPlugin getLoadedPlugin(String packageName) {
         return this.mPlugins.get(packageName);
+    }
+
+    public List<LoadedPlugin> getAllLoadedPlugins() {
+        List<LoadedPlugin> list = new ArrayList<>();
+        list.addAll(mPlugins.values());
+        return list;
     }
 
     /**

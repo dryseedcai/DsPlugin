@@ -1,8 +1,10 @@
 package com.dryseed.dsvirtualapk.core;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.dryseed.dsvirtualapk.core.utils.Constants;
 import com.dryseed.dsvirtualapk.core.utils.LogUtil;
 
 import java.io.File;
@@ -26,13 +29,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initViews();
-
-        Toast.makeText(this, "" + this.getPackageName(), Toast.LENGTH_SHORT).show();
-        loadPlugin(this);
-
     }
 
     private void initViews() {
+        findViewById(R.id.loadBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadPlugin(MainActivity.this);
+            }
+        });
         findViewById(R.id.btn1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
                 testActivity(v);
             }
         });
+        findViewById(R.id.btn4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testResources(v);
+            }
+        });
     }
 
     /**
@@ -58,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param context
      */
+    @SuppressLint("UseToastDirectly")
     private void loadPlugin(Context context) {
         pluginManager = PluginManager.getInstance(context);
 
@@ -69,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         if (apk.exists()) {
             try {
                 pluginManager.loadPlugin(apk);
-                LogUtil.d("Loaded plugin from apk: " + apk);
+                Toast.makeText(context, "Loaded plugin from apk: " + apk, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -89,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 inputStream.close();
 
                 pluginManager.loadPlugin(file);
-                LogUtil.d("Loaded plugin from assets: " + file);
+                Toast.makeText(context, "Loaded plugin from assets: " + file, Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -116,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void testClassLoader(View view) {
         try {
-            Class<?> clazz = pluginManager.getLoadedPlugin("com.dryseed.dexclassloaderbundleapk").getClassLoader().loadClass("com.dryseed.dexclassloaderbundleapk.Utils");
+            Class<?> clazz = pluginManager.getLoadedPlugin(Constants.TEST_PACKAGE_NAME).getClassLoader().loadClass(Constants.TEST_PACKAGE_NAME + ".Utils");
             Constructor<?> constructor = clazz.getConstructor();
             Object bundleUtils = constructor.newInstance();
 
@@ -125,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             printSumMethod.setAccessible(true);
             Integer sum = (Integer) printSumMethod.invoke(bundleUtils,
                     getApplicationContext(), 10, 20, "计算结果");
-            Log.d("MMM", "debug:sum = " + sum);
+            LogUtil.d("MMM", "debug:sum = " + sum);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -138,8 +150,26 @@ public class MainActivity extends AppCompatActivity {
      */
     public void testActivity(View view) {
         Intent intent = new Intent();
-        ComponentName componentName = new ComponentName("com.dryseed.dexclassloaderbundleapk", "com.dryseed.dexclassloaderbundleapk.MainActivity");
+        ComponentName componentName = new ComponentName(Constants.TEST_PACKAGE_NAME, Constants.TEST_PACKAGE_NAME + ".MainActivity");
         intent.setComponent(componentName);
         startActivity(intent);
+    }
+
+    /**
+     * Test Hook Resources
+     * TODO: 还需解决资源文件id冲突的问题
+     *
+     * @param view
+     */
+    @SuppressLint({"UseToastDirectly", "ResourceType"})
+    public void testResources(View view) {
+        /**
+         * 如果使用getIdentifier方法，第一个参数是资源名称，第二个参数是资源类型，第三个参数是离线apk的包名，切记第三个参数。
+         */
+        Resources resources = pluginManager.getLoadedPlugin(Constants.TEST_PACKAGE_NAME).getResources();
+        //String str = resources.getString(resources.getIdentifier("bundle_name", "string", Constants.TEST_PACKAGE_NAME));
+
+        String s = resources.getString(0x7f060020);
+        Toast.makeText(this, getResources().getString(0x7f060020) + "||" + s, Toast.LENGTH_SHORT).show();
     }
 }

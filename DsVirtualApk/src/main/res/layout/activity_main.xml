@@ -7,30 +7,56 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/btn1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="10dp"
-        android:background="#cccccc"
-        android:gravity="center"
-        android:text="Test Instrumentation" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/btn1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="#cccccc"
+            android:gravity="center"
+            android:text="Test Instrumentation" />
+
+        <TextView
+            android:id="@+id/btn2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="#cccccc"
+            android:gravity="center"
+            android:text="Test ClassLoader" />
+
+        <TextView
+            android:id="@+id/btn3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="#cccccc"
+            android:gravity="center"
+            android:text="Test Activity" />
+
+        <TextView
+            android:id="@+id/btn4"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="#cccccc"
+            android:gravity="center"
+            android:text="Test Resources" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/btn2"
+        android:id="@+id/loadBtn"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_gravity="bottom"
         android:layout_margin="10dp"
         android:background="#cccccc"
         android:gravity="center"
-        android:text="Test ClassLoader" />
-
-    <TextView
-        android:id="@+id/btn3"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="10dp"
-        android:background="#cccccc"
-        android:gravity="center"
-        android:text="Test Activity" />
+        android:text="Load Plugin" />
 </LinearLayout>

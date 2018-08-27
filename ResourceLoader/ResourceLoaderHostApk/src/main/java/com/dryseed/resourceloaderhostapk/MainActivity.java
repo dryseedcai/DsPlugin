@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
     private ImageView imageView;
 
     @Override
-    @SuppressLint("ResourceType")
+    @SuppressLint({"ResourceType", "UseToastDirectly"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

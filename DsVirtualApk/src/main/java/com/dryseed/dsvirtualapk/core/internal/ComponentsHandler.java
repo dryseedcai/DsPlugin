@@ -1,9 +1,12 @@
 package com.dryseed.dsvirtualapk.core.internal;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ResolveInfo;
+import android.widget.Toast;
 
 import com.dryseed.dsvirtualapk.core.PluginManager;
 import com.dryseed.dsvirtualapk.core.utils.Constants;
@@ -19,6 +22,25 @@ public class ComponentsHandler {
     public ComponentsHandler(PluginManager pluginManager) {
         mPluginManager = pluginManager;
         mContext = pluginManager.getHostContext();
+    }
+
+    /**
+     * transform intent from implicit to explicit
+     */
+    @SuppressLint("UseToastDirectly")
+    public Intent transformIntentToExplicitAsNeeded(Intent intent) {
+        ComponentName component = intent.getComponent();
+        if (component == null
+                || component.getPackageName().equals(mContext.getPackageName())) {
+//            ResolveInfo info = mPluginManager.resolveActivity(intent);
+//            if (info != null && info.activityInfo != null) {
+//                component = new ComponentName(info.activityInfo.packageName, info.activityInfo.name);
+//                intent.setComponent(component);
+//            }
+        }
+
+        Toast.makeText(mContext, "TODO: mPluginManager.resolveActivity", Toast.LENGTH_SHORT).show();
+        return intent;
     }
 
     public void markIntentIfNeeded(Intent intent) {

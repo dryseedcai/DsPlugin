@@ -31,4 +31,7 @@ public class Constants {
     public static final boolean COMBINE_CLASSLOADER = true;
     public static final boolean DEBUG = true;
 
+    public static final String TEST_PACKAGE_NAME = "com.dryseed.dexclassloaderbundleapk";
+    public static final String PLUGIN_CORE_PACKAGE_NAME = "com.dryseed.dsvirtualapk.core";
+
 }
